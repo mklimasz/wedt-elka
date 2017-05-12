@@ -1,5 +1,19 @@
 apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'application'
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
+}
+
+task cleanSeminars(type: JavaExec) {
+    main = 'pl.edu.pw.elka.data.preprocessing.seminars.SeminarCleanTextExtractor'
+    args = [project.hasProperty('seminarsDir') ? project.property('seminarsDir'): '',
+            project.hasProperty('resultFile') ? project.property('resultFile'): '']
+    classpath = sourceSets.main.runtimeClasspath
 }
