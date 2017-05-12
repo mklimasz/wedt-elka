@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 class SeminarLabelValuePairsExtractorTest extends Specification {
 
-    def "real seminar data contains two tags"() {
+    def "real seminar data contains three tags"() {
         given:
             def seminarData = this.getClass().getResource("/test_seminar_data.txt").text
         when:
