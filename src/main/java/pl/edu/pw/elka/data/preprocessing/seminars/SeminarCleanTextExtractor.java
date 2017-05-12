@@ -7,21 +7,16 @@ import pl.edu.pw.elka.data.preprocessing.FilesLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public final class SeminarCleanTextExtractor implements CleanTextExtractor {
 
-    private static final String SPLIT_WORD = "Abstract:";
     private static final String PUNCTUATION_MARKS_REGEX = "[,.;!?(){}\\[\\]<>%\"_\\-\\*]";
     private static final String XML_TAGS_REGEX = "<.*?>";
     private static final String UTF_8 = "UTF-8";
 
     @Override
     public String extract(String data) {
-        String[] textParts = data.split(SPLIT_WORD);
-        String xmlText = IntStream.range(1, textParts.length)
-                .mapToObj(i -> textParts[i])
-                .collect(Collectors.joining(" "));
+        String xmlText = new SeminarHeaderTrimmer().trim(data);
         String noXmlText = xmlText.replaceAll(XML_TAGS_REGEX, "");
         return noXmlText.replaceAll(PUNCTUATION_MARKS_REGEX, "");
     }
