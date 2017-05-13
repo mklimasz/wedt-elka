@@ -29,3 +29,12 @@ task labelSeminars(type: JavaExec) {
             project.hasProperty('resultFile') ? project.property('resultFile'): '']
     classpath = sourceSets.main.runtimeClasspath
 }
+
+task cleanConferences(type: JavaExec) {
+	jvmArgs = [ "-Xmx2g", "-Xms2g" ]
+    main = 'pl.edu.pw.elka.data.preprocessing.conferences.ConferenceCleanTextExtractor'
+    args = [project.hasProperty('conferencesDir') ? project.property('conferencesDir'): '',
+            project.hasProperty('cleanTextFile') ? project.property('cleanTextFile'): '',
+            project.hasProperty('lvFile') ? project.property('lvFile'): '']
+    classpath = sourceSets.main.runtimeClasspath
+}
