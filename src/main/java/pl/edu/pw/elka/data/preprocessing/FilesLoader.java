@@ -5,7 +5,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.util.Collection;
 
-public class FilesLoader {
+public final class FilesLoader {
 
     public Collection<File> loadFiles(String path) {
         return FileUtils.listFiles(new File(path), null, true);

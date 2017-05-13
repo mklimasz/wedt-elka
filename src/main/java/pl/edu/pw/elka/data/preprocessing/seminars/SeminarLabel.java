@@ -1,6 +1,6 @@
 package pl.edu.pw.elka.data.preprocessing.seminars;
 
-public enum SeminarLabel {
+enum SeminarLabel {
     TIME("stime"), SPEAKER("speaker"), LOCATION("location");
 
     private String tagName;

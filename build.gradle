@@ -7,6 +7,7 @@ repositories {
 }
 
 dependencies {
+    compile group: 'uk.ac.gate', name: 'gate-core', version: '8.4'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
     compile group: 'io.vavr', name: 'vavr', version: '0.9.0'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
@@ -16,6 +17,15 @@ dependencies {
 task cleanSeminars(type: JavaExec) {
     main = 'pl.edu.pw.elka.data.preprocessing.seminars.SeminarCleanTextExtractor'
     args = [project.hasProperty('seminarsDir') ? project.property('seminarsDir'): '',
+            project.hasProperty('resultFile') ? project.property('resultFile'): '']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task labelSeminars(type: JavaExec) {
+    main = 'pl.edu.pw.elka.data.preprocessing.seminars.SeminarLabelValuePairsExtractor'
+    args = [project.hasProperty('seminarsDir') ? project.property('seminarsDir'): '',
+            project.hasProperty('cleanSeminarsFile') ? project.property('cleanSeminarsFile'): '',
+            project.hasProperty('gatePath') ? project.property('gatePath'): '',
             project.hasProperty('resultFile') ? project.property('resultFile'): '']
     classpath = sourceSets.main.runtimeClasspath
 }
