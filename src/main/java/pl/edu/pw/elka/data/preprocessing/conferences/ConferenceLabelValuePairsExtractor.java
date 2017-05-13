@@ -40,7 +40,7 @@ public class ConferenceLabelValuePairsExtractor implements CleanTextExtractor {
 			output = output + pair._1.tagName() + "\t" + pair._2 + "\n";
 		}
     	
-    	return output;
+    	return output.replace(" ", "");
     	
     }
 	

@@ -45,7 +45,7 @@ public class ConferenceCleanTextExtractor implements CleanTextExtractor {
         CleanTextExtractor lvExtractor = new ConferenceLabelValuePairsExtractor();
         
         // HTML clearing
-        String noHtmlText = new FilesLoader().loadFiles(conferencesDir)
+        String noHtmlText = new FilesLoader().loadFiles(conferencesDir, new String[]{"html"})
                 .stream()
                 .map(f -> {
                     try {
