@@ -28,4 +28,7 @@ Classification:
 7. FINAL_VERSION_DUE
 
 Clear conferences data:
-./gradlew cleanConferences -PconferencesDir="/example/dir" -PcleanTextFile="/example/dir/cleanText.txt" -PlvFile="/example/dir/labelValuePairs.txt"
+./gradlew cleanConferences -PconferencesDir="/example/dir" -PcleanConferencesFile="/example/dir/cleanConferencesText.txt"
+
+Extract entities with labels from conferences data:
+./gradlew labelConferences -PconferencesDir="/example/dir" -PcleanConferencesFile="/example/dir/cleanConferencesText.txt" -PgatePath="/example/dir/gateframework" -PresultFile="/example/dir/labels.csv"

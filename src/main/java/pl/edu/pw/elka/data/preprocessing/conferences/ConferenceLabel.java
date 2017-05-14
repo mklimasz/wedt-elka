@@ -3,7 +3,7 @@ package pl.edu.pw.elka.data.preprocessing.conferences;
 public enum ConferenceLabel {
 	
     TIME("when"), 
-    LOCATION("where"), 
+    LOCATION("wher"), 
     NAME("cname"), 
     ABBREVIATION("abbre"),
     SUBMISSION("subm"), 

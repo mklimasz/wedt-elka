@@ -38,11 +38,9 @@ public class ConferenceCleanTextExtractor implements CleanTextExtractor {
         
         // output
         String resultFile1 = args[1];
-        String resultFile2 = args[2];
         
-        // Extractors
+        // Extractor
         CleanTextExtractor cleanTextExtractor = new ConferenceCleanTextExtractor();
-        CleanTextExtractor lvExtractor = new ConferenceLabelValuePairsExtractor();
         
         // HTML clearing
         String noHtmlText = new FilesLoader().loadFiles(conferencesDir, new String[]{"html"})
@@ -55,22 +53,9 @@ public class ConferenceCleanTextExtractor implements CleanTextExtractor {
                     }
                 })
                 .collect(Collectors.joining(" "));
-        
-        // label-value pairs
-        String lvText = new FilesLoader().loadFiles(conferencesDir)
-                .stream()
-                .map(f -> {
-                    try {
-                        return lvExtractor.extract(FileUtils.readFileToString(f, UTF_8));
-                    } catch (IOException e) {
-                        throw new IllegalArgumentException("Illegal conference file");
-                    }
-                })
-                .collect(Collectors.joining(" "));
 
-        // Writing to output
+        // Printing output
         FileUtils.writeStringToFile(new File(resultFile1), noHtmlText, UTF_8);
-        FileUtils.writeStringToFile(new File(resultFile2), lvText, UTF_8);
         
     }
 	
