@@ -57,7 +57,7 @@ public final class SeminarLabelValuePairsExtractor implements LabelValuePairsExt
         }
         String result = new NamedEntityLabelMapper().mapToLabelValuePairs(entities, pairs)
                 .stream()
-                .map(p -> p.value + "," + p.label)
+                .map(p -> p.value.replaceAll("\n", " ") + "," + p.label)
                 .collect(Collectors.joining("\n"));
         FileUtils.writeStringToFile(new File(resultFile), result, UTF_8);
     }

@@ -10,9 +10,14 @@ Classification:
 Clear seminars data:
 ./gradlew cleanSeminars -PseminarsDir="/example/dir" -PresultFile="/example/dir/clean.txt"
 
+Make vectors using clean data using Glove:
+Glove - [link](https://github.com/stanfordnlp/GloVe)
+
 Extract entities with labels from seminar data:
 ./gradlew labelSeminars -PseminarsDir="/example/dir" -PcleanSeminarsFile="/example/dir/clean.txt" -PgatePath="/example/dir/gateframework" -PresultFile="/example/dir/labels.csv"
 
+Vectorize seminars to csv:
+ ./gradlew vectorizeSeminars -PlabelsFile="/example/dir/labels.csv" -Pvectors="/example/dir/vectors.txt" -PresultFile="/example/dir/seminars.csv"
 
 
 
