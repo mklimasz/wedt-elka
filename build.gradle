@@ -7,6 +7,7 @@ repositories {
 }
 
 dependencies {
+    compile group: 'nz.ac.waikato.cms.weka', name: 'LibSVM', version: '1.0.10'
     compile group: 'org.deeplearning4j', name: 'deeplearning4j-core', version: '0.8.0'
     compile group: 'org.deeplearning4j', name: 'deeplearning4j-nlp', version: '0.8.0'
     compile group: 'org.nd4j', name: 'nd4j-native-platform', version: '0.8.0'
@@ -56,3 +57,10 @@ task labelConferences(type: JavaExec) {
             project.hasProperty('resultFile') ? project.property('resultFile'): '']
     classpath = sourceSets.main.runtimeClasspath
 }
+
+task svmClassify(type: JavaExec) {
+    main = 'pl.edu.pw.elka.svm.SvmPredict'
+    args = [project.hasProperty('csvFile') ? project.property('csvFile'): '']
+    classpath = sourceSets.main.runtimeClasspath
+}
+

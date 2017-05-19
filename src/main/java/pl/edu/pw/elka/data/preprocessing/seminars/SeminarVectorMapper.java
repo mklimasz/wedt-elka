@@ -57,7 +57,7 @@ public class SeminarVectorMapper {
             String className = line.get(1).toString();
             double[] vector = mapper.map(name.split("[ ]"));
             List<Writable> result = new ArrayList<>();
-            result.add(new Text(name));
+            result.add(new Text("\"" + name + "\""));
             result.add(new Text(className));
             Arrays.stream(vector)
                     .forEach(el -> result.add(new DoubleWritable(el)));

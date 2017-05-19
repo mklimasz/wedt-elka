@@ -19,7 +19,8 @@ Extract entities with labels from seminar data:
 Vectorize seminars to csv:
  ./gradlew vectorizeSeminars -PlabelsFile="/example/dir/labels.csv" -Pvectors="/example/dir/vectors.txt" -PresultFile="/example/dir/seminars.csv"
 
-
+Classify using SVM:
+./gradlew svmClassify -PcsvFile="/example/dir/seminars.csv"
 
 Conferences data - [link](http://ii.pw.edu.pl/%7Epandrusz/data/conferences/conferences-data-0.2.tgz)
 
