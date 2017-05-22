@@ -12,13 +12,17 @@ public final class SeminarCleanTextExtractor implements CleanTextExtractor {
 
     private static final String PUNCTUATION_MARKS_REGEX = "[,.;!?(){}\\[\\]<>%\"_\\-\\*]";
     private static final String XML_TAGS_REGEX = "<.*?>";
+    private static final String SPACES_REGEX = "[ ]{2,}";
     private static final String UTF_8 = "UTF-8";
 
     @Override
     public String extract(String data) {
-        String xmlText = new SeminarHeaderTrimmer().trim(data);
-        String noXmlText = xmlText.replaceAll(XML_TAGS_REGEX, "");
-        return noXmlText.replaceAll(PUNCTUATION_MARKS_REGEX, "");
+       return new SeminarHeaderTrimmer().trim(data)
+               .replaceAll(XML_TAGS_REGEX, "")
+               .replaceAll("\n", " ")
+               .replaceAll("\t", " ")
+               .replaceAll(SPACES_REGEX, " ")
+               .replaceAll(PUNCTUATION_MARKS_REGEX, "");
     }
 
     public static void main(String[] args) throws IOException {

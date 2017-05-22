@@ -6,7 +6,6 @@ import org.jsoup.Jsoup;
 import pl.edu.pw.elka.data.preprocessing.FilesLoader;
 import pl.edu.pw.elka.data.preprocessing.LabelValuePair;
 import pl.edu.pw.elka.data.preprocessing.LabelValuePairsExtractor;
-import pl.edu.pw.elka.ner.NamedEntityLabelMapper;
 import pl.edu.pw.elka.ner.NamedEntityRecognizer;
 
 import java.io.File;
@@ -20,6 +19,8 @@ public final class SeminarLabelValuePairsExtractor implements LabelValuePairsExt
 
     private static final String UTF_8 = "UTF-8";
     private static final List<String> ENTITY_NAMES = Arrays.asList("Person", "Location", "Date");
+    private static final String PUNCTUATION_MARKS_REGEX = "[,.;!?(){}\\[\\]<>%\"_\\-\\*]";
+    private static final String SPACES_REGEX = "[ ]{2,}";
 
     @Override
     public List<LabelValuePair> extract(String data) {
@@ -27,7 +28,10 @@ public final class SeminarLabelValuePairsExtractor implements LabelValuePairsExt
                 .flatMap(tag -> Jsoup.parse(new SeminarHeaderTrimmer().trim(data))
                         .select(tag.tagName())
                         .stream()
-                        .map(e -> LabelValuePair.from(tag.toString(), e.text())))
+                        .map(e -> LabelValuePair.from(tag.toString(), e.text()
+                                .replaceAll(PUNCTUATION_MARKS_REGEX, "")
+                                .replaceAll("\n", " ")
+                                .replaceAll(SPACES_REGEX, " "))))
                 .collect(Collectors.toList());
     }
 
@@ -55,7 +59,7 @@ public final class SeminarLabelValuePairsExtractor implements LabelValuePairsExt
         } catch (Exception e) {
             throw new IllegalArgumentException("Gate framework issue, check path");
         }
-        String result = new NamedEntityLabelMapper().mapToLabelValuePairs(entities, pairs)
+        String result = new SeminarNamedEntityLabelMapper().mapToLabelValuePairs(entities, pairs)
                 .stream()
                 .map(p -> p.value.replaceAll("\n", " ") + "," + p.label)
                 .collect(Collectors.joining("\n"));

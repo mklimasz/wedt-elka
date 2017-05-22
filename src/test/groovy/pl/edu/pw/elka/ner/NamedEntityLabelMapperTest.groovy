@@ -20,7 +20,7 @@ class NamedEntityLabelMapperTest extends Specification {
 
     def "not labeled entity gets label"() {
         given:
-            def entities = Arrays.asList("not labeled", "labeled person", "labeled date")
+            def entities = Arrays.asList("other expected", "labeled person", "labeled date")
             def pairs = Arrays.asList(LabelValuePair.from("Person", "labeled person"),
                 LabelValuePair.from("Date", "labeled date"))
         when:
