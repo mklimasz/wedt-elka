@@ -52,7 +52,7 @@ class SeminarNamedEntityLabelMapper {
     private List<LabelValuePair> mapSpeakers(List<String> entities, List<LabelValuePair> labelValuePairs) {
         return entities.stream()
                 .map(e -> labelValuePairs.stream()
-                        .filter(p -> p.label.equals(SeminarLabel.LOCATION.toString()))
+                        .filter(p -> p.label.equals(SeminarLabel.SPEAKER.toString()))
                         .filter(p -> {
                             long count = Arrays.stream(e.split(SPACE))
                                     .filter(eV -> Arrays.asList(p.value.split(SPACE)).contains(eV))

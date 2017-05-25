@@ -34,14 +34,6 @@ task labelSeminars(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
-task vectorizeSeminars(type: JavaExec) {
-    main = 'pl.edu.pw.elka.data.preprocessing.seminars.SeminarVectorMapper'
-    args = [project.hasProperty('labelsFile') ? project.property('labelsFile'): '',
-            project.hasProperty('vectors') ? project.property('vectors'): '',
-            project.hasProperty('resultFile') ? project.property('resultFile'): '']
-    classpath = sourceSets.main.runtimeClasspath
-}
-
 task cleanConferences(type: JavaExec) {
     main = 'pl.edu.pw.elka.data.preprocessing.conferences.ConferenceCleanTextExtractor'
     args = [project.hasProperty('conferencesDir') ? project.property('conferencesDir'): '',
@@ -54,6 +46,14 @@ task labelConferences(type: JavaExec) {
     args = [project.hasProperty('conferencesDir') ? project.property('conferencesDir'): '',
             project.hasProperty('cleanConferencesFile') ? project.property('cleanConferencesFile'): '',
             project.hasProperty('gatePath') ? project.property('gatePath'): '',
+            project.hasProperty('resultFile') ? project.property('resultFile'): '']
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task vectorize(type: JavaExec) {
+    main = 'pl.edu.pw.elka.word2vec.VectorMapper'
+    args = [project.hasProperty('labelsFile') ? project.property('labelsFile'): '',
+            project.hasProperty('vectors') ? project.property('vectors'): '',
             project.hasProperty('resultFile') ? project.property('resultFile'): '']
     classpath = sourceSets.main.runtimeClasspath
 }

@@ -47,6 +47,7 @@ public class ConferenceCleanTextExtractor implements CleanTextExtractor {
                 .stream()
                 .map(f -> {
                     try {
+                    	if(!f.getName().contains("0.html")) return "";
                         return cleanTextExtractor.extract(FileUtils.readFileToString(f, UTF_8));
                     } catch (IOException e) {
                         throw new IllegalArgumentException("Illegal conference file");

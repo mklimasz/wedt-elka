@@ -17,13 +17,12 @@ import pl.edu.pw.elka.data.preprocessing.CleanTextExtractor;
 import pl.edu.pw.elka.data.preprocessing.FilesLoader;
 import pl.edu.pw.elka.data.preprocessing.LabelValuePair;
 import pl.edu.pw.elka.data.preprocessing.LabelValuePairsExtractor;
-import pl.edu.pw.elka.ner.NamedEntityLabelMapper;
 import pl.edu.pw.elka.ner.NamedEntityRecognizer;
 
 public class ConferenceLabelValuePairsExtractor implements LabelValuePairsExtractor {
 	
     private static final String UTF_8 = "UTF-8";
-    private static final List<String> ENTITY_NAMES = Arrays.asList("Person", "Location", "Date");
+    private static final List<String> ENTITY_NAMES = Arrays.asList("Person", "Location", "Date", "Organization", "Identifier");
 	
 	@Override
     public List<LabelValuePair> extract(String data) {
@@ -78,6 +77,7 @@ public class ConferenceLabelValuePairsExtractor implements LabelValuePairsExtrac
                 .stream()
                 .map(f -> {
                     try {
+                    	if(!f.getName().contains("0.html")) return new ArrayList<LabelValuePair>();
                         return extractor.extract(FileUtils.readFileToString(f, UTF_8));
                     } catch (IOException e) {
                         throw new IllegalArgumentException("Illegal conference file");
@@ -85,15 +85,6 @@ public class ConferenceLabelValuePairsExtractor implements LabelValuePairsExtrac
                 })
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-        
-        // removing dupplicates
-        List<LabelValuePair> helpList = new ArrayList<LabelValuePair>();
-        HashSet<String> lookup = new HashSet<String>();
-        for (LabelValuePair pair : pairs) {
-			if(lookup.add(pair.label + pair.value.toLowerCase()))
-				helpList.add(pair);
-		}
-        pairs = helpList;
         
         
         // clean text file
@@ -108,9 +99,9 @@ public class ConferenceLabelValuePairsExtractor implements LabelValuePairsExtrac
         }
         
         // printing result
-        String result = new NamedEntityLabelMapper().mapToLabelValuePairs(entities, pairs)
+        String result = new ConferenceNamedEntityLabelMapper().mapToLabelValuePairs(entities, pairs)
                 .stream()
-                .map(p -> p.value + "," + p.label)
+                .map(p -> p.value.replaceAll("\n", " ") + "," + p.label)
                 .collect(Collectors.joining("\n"));
         FileUtils.writeStringToFile(new File(resultFile), result, UTF_8);
     }
