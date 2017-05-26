@@ -57,7 +57,9 @@ public class VectorMapper {
         while (csvRecordReader.hasNext()) {
             List<Writable> line = csvRecordReader.next();
             String name = line.get(0).toString();
-            String className = line.get(1).toString();
+            String className = "";
+            if(line.size() > 1)
+            	className = line.get(1).toString();
             double[] vector = mapper.map(name.split("[ ]"));
             List<Writable> result = new ArrayList<>();
             result.add(new Text("\"" + name + "\""));

@@ -86,6 +86,14 @@ public class ConferenceLabelValuePairsExtractor implements LabelValuePairsExtrac
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         
+        // removing dupplicates
+        List<LabelValuePair> helpList = new ArrayList<LabelValuePair>();
+        HashSet<String> lookup = new HashSet<String>();
+        for (LabelValuePair pair : pairs) {
+			if(lookup.add(pair.label + pair.value.toLowerCase()))
+				helpList.add(pair);
+		}
+        pairs = helpList;
         
         // clean text file
         String cleanConferenceFileText = FileUtils.readFileToString(new File(cleanConferencesFile), UTF_8);

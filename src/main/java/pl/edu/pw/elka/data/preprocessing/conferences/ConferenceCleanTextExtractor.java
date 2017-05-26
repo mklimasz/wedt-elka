@@ -2,6 +2,7 @@ package pl.edu.pw.elka.data.preprocessing.conferences;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
@@ -9,6 +10,7 @@ import org.jsoup.Jsoup;
 
 import pl.edu.pw.elka.data.preprocessing.CleanTextExtractor;
 import pl.edu.pw.elka.data.preprocessing.FilesLoader;
+import pl.edu.pw.elka.data.preprocessing.LabelValuePair;
 
 public class ConferenceCleanTextExtractor implements CleanTextExtractor {
 
