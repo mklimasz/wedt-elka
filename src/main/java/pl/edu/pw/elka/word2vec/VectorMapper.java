@@ -34,16 +34,14 @@ public class VectorMapper {
                 .filter(s -> s.length() > 0)
                 .map(this::getWordVector)
                 .reduce(INDArray::add)
+                .map(a -> a.divi(entity.length))
                 .map(a -> a.data().asDouble())
                 .orElseThrow(() -> new IllegalArgumentException("Provide non empty array"));
     }
 
     private INDArray getWordVector(String s) {
         return Nd4j.create(Optional.ofNullable(wordVectors.getWordVector(s))
-                .orElseGet(() -> {
-                    System.out.println("Couldn't find vector for word " + s);
-                    return DEFAULT_VECTOR;
-                }));
+                .orElseGet(() -> DEFAULT_VECTOR));
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -59,7 +57,7 @@ public class VectorMapper {
             String name = line.get(0).toString();
             String className = "";
             if(line.size() > 1)
-            	className = line.get(1).toString();
+                className = line.get(1).toString();
             double[] vector = mapper.map(name.split("[ ]"));
             List<Writable> result = new ArrayList<>();
             result.add(new Text("\"" + name + "\""));
@@ -71,15 +69,13 @@ public class VectorMapper {
         csvRecordReader.close();
         csvRecordWriter.close();
     }
-    
-    private static double[] getDefaultVector(int length)
-    {
-    	double[] vec = new double[length];
-    	Random rand = new Random(DEFAULT_VECTOR_SEED);
-    	for(int i = 0; i < vec.length; i++)
-    	{
-    		vec[i] = -4 + 8 * rand.nextDouble();
-    	}
-    	return vec;
+
+    private static double[] getDefaultVector(int length) {
+        double[] vec = new double[length];
+        Random rand = new Random(DEFAULT_VECTOR_SEED);
+        for(int i = 0; i < vec.length; i++) {
+            vec[i] = -2 + 4 * rand.nextDouble();
+        }
+        return vec;
     }
 }

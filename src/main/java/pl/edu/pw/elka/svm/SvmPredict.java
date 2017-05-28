@@ -17,7 +17,7 @@ public class SvmPredict {
         Instances data = prepareData(args[0]);
         libSVM.buildClassifier(data);
         Evaluation evaluation = new Evaluation(data);
-        evaluation.crossValidateModel(libSVM, data, 2, new Debug.Random(1));
+        evaluation.crossValidateModel(libSVM, data, 4, new Debug.Random(1));
         System.out.println(evaluation.toClassDetailsString());
         System.out.println(evaluation.toSummaryString());
         System.out.println(evaluation.toMatrixString());
